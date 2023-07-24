@@ -1,35 +1,62 @@
-const Hello = (props) => {
-  console.log(props)
+const Header = (props) => {
   return (
-    <div>
-      <p>
-        Hello {props.name}, you are {props.age} years old
-      </p>
-    </div>
+    <h1>{props.course}</h1>
   )
 }
 
-const Footer = () => {
+const Total = (props) => {
   return (
-    <div>
-      greeting app created by <a href='https://github.com/mluukkai'>mluukkai</a>
-    </div>
+    <p>Number of exercises {props.total}</p>
+  )
+}  
+
+const Part = (props) => {
+  return (
+    <p>
+      {props.part} {props.exercise}
+    </p>
+  )
+}
+
+const Content = (props) => {
+
+  return (
+    props.partsAndExercises.map((part) => {
+    return <p>
+      <Part part={part.part} exercise={part.exercise}/>
+    </p>
+    })
   )
 }
 
 const App = () => {
-  const name = 'Peter'
-  const age = 10
-  const friends = [ 'Peter', 'Maya'].join(' and ')
+  const course = 'Half Stack application development'
+  const partsAndExercises = [
+    {
+      part: 'Fundamentals of React',
+      exercise: 10
+    },
+    {
+      part: 'Using props to pass data',
+      exercise: 7
+    },
+    {
+      part: 'State of a component',
+      exercise: 14
+    }
+  ]
+
+  const total = partsAndExercises.reduce((sum, part) => {
+    return sum + part.exercise
+  }, 0)
 
   return (
-    <>
-      <h1>Greetings</h1>
-      <Hello name='Maya' age={26 + 10} />
-      <Hello name={name} age={age} />
-      <p>{friends}</p>
-      <Footer />
-    </>
+    <div>
+      <Header course={course} />
+      <Content partsAndExercises={partsAndExercises} />
+      <Total  total={total}/>
+    </div>
   )
 }
+
 export default App;
